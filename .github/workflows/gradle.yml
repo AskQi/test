@@ -20,14 +20,3 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew clean build
-
-      - name: Release Drafter
-        uses: release-drafter/release-drafter@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: Jar
-          path: |
-            build/libs/*.jar
