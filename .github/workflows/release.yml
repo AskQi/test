@@ -25,7 +25,7 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: monkeyWie/create-release@master
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -42,3 +42,14 @@ jobs:
           asset_path: build/libs/test_ci-0.0.1-SNAPSHOT.jar
           asset_name: test_ci-${{ steps.create_release.outputs.tag }}.jar
           asset_content_type: application/x-java-archive
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /home/${{ secrets.USERNAME }}/spring/test
+            wget https://github.com/AskQi/test/releases/download/${{ steps.create_release.outputs.tag }}/test_ci-${{ steps.create_release.outputs.tag }}.jar -O test_ci.jar
+            sh restart.sh
