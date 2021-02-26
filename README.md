@@ -1,1 +1,2 @@
 # test
+[![Release Version](https://img.shields.io/github/release/kuoruan/openwrt-frp.svg)](https://github.com/AskQi/test/releases/latest) [![Latest Release Download](https://img.shields.io/github/downloads/kuoruan/openwrt-frp/latest/total.svg)](https://github.com/AskQi/test/releases/latest) [![Total Download](https://img.shields.io/github/downloads/kuoruan/openwrt-frp/total.svg)](https://github.com/AskQi/test/releases)
