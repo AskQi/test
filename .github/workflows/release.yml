@@ -43,13 +43,13 @@ jobs:
           asset_name: test_ci-${{ steps.create_release.outputs.tag }}.jar
           asset_content_type: application/x-java-archive
       - name: Deploy file to server
-        uses: wlixcc/SFTP-Deploy-Action@v1.0
+        uses: garygrossgarten/github-action-scp@release
         with:
-          username: ${{ secrets.USERNAME }}   #ssh user name
-          server: ${{ secrets.HOST }} #引用之前创建好的secret
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} #引用之前创建好的secret
-          local_path: build/libs/test_ci-0.0.1-SNAPSHOT.jar  # 对应我们项目build的文件夹路径
-          remote_path: /home/${{ secrets.USERNAME }}/spring/test
+          local: build/libs/test_ci-0.0.1-SNAPSHOT.jar
+          remote: /home/${{ secrets.USERNAME }}/spring/test/test_ci.jar
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
       - name: Deploy restart
         uses: appleboy/ssh-action@master
         with:
@@ -58,6 +58,5 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /home/${{ secrets.USERNAME }}/spring/test
-            mv test_ci-0.0.1-SNAPSHOT.jar test_ci.jar
+            cd /home/$(whoami)/spring/test
             sh restart.sh
