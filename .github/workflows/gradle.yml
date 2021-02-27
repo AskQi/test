@@ -5,7 +5,6 @@ name: Build CI
 
 on:
   push:
-    branches: [ main ]
 
 jobs:
   build:
